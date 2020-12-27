@@ -27,7 +27,7 @@ class ReadFile:
                 
             #print(ip_list)
             data = json.dumps(ip_list)
-            Path("../temp_ips.json").write_text(data)
+            Path("/tmp/temp_ips.json").write_text(data)
         else:
             print(f"file {file_location} does not exist " )
             exit(0)

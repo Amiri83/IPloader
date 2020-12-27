@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb80cd4a-356b-4b4c-bb16-54083a5c6c37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/libs/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/read_file.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/updateDB.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/dbconnect.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/dbconnect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/read_file.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/read_file.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libs/updateDB.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/updateDB.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +30,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/run.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/libs/updateDB.py" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -105,11 +102,19 @@
       <option name="project" value="LOCAL" />
       <updated>1609070824277</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="read File added">
+      <created>1609078939475</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1609078939475</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="init commit" />
+    <MESSAGE value="read File added" />
+    <option name="LAST_COMMIT_MESSAGE" value="read File added" />
   </component>
 </project>
