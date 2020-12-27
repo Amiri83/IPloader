@@ -21,9 +21,12 @@ class DBconnct:
                 cursor = conn.execute(command)
                 rows = cursor.fetchone()
                 if rows == None:
+                    print("Got row numbers from DB = 0 rows")
                     return 0
                 else:
-                    return list(rows).pop()
+                    index = list(rows).pop()
+                    print(f"Got row numbers from DB = {index} rows")
+                    return index
         except BaseException as exp:
             print(exp)
             print(type(exp))
