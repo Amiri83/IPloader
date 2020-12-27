@@ -23,7 +23,7 @@ class DBconnct:
                 if rows == None:
                     return 0
                 else:
-                    return rows
+                    return list(rows).pop()
         except BaseException as exp:
             print(exp)
             print(type(exp))
