@@ -9,19 +9,15 @@ logging.basicConfig(filename=configs.log_destination,
                     level=logging.INFO)
 
 
-class DBconnct:
+class DBconnect:
     def __init__(self):
 
         try:
             with sqlite3.connect(configs.dbpath) as conn:
-                command1 = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
+                command = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
                            'ip STRING NOT NULL,' \
                            'date_added STRING NOT NULL)'
-                command2 = 'create table if not exists expired_addresses ( id INTEGER PRIMARY KEY , ' \
-                           'ip STRING NOT NULL,' \
-                           'date_added STRING NOT NULL)'
-                conn.execute(command1)
-                conn.execute(command2)
+                conn.execute(command)
         except BaseException as exp:
             logging.error(f"{exp}")
             logging.error(f"{type(exp)}")

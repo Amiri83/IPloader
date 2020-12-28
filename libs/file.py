@@ -1,5 +1,5 @@
 import json
-from libs.dbconnect import DBconnct
+from libs.dbconnect import DBconnect
 from datetime import datetime
 from pathlib import Path
 import libs.readConfig
@@ -40,14 +40,14 @@ class File:
     
     @staticmethod
     def convert(ips):
-        db = DBconnct()
+        db = DBconnect()
         ip_list = []
-        id = db.get_id()
+        id_db = db.get_id()
         dt = datetime.today().strftime('%b %d %Y %I:%M%p')
         try:
             for ip in ips:
-                id = id + 1
-                ip_dict = {"id": id, "ip": ip, "date_added": dt}
+                id_db = id_db + 1
+                ip_dict = {"id": id_db, "ip": ip.strip(), "date_added": dt}
                 ip_list.append(ip_dict)
         except BaseException as exp:
             logging.error(f"{exp}")

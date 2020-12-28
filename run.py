@@ -14,25 +14,22 @@ try:
     logging.info("========== Started ==============")
     result = compare.do_compare(configs.infile)
     if result is not None:
-        logging.info("New ips will be insert to DB")
+        # logging.info("New ips will be insert to DB")
         db.insert_data(result)
     else:
         logging.info("No new IP found")
     try:
-        expired_ips = (compare.get_expried_ips())
+        expired_ips = (compare.get_expired_ips())
         final_ips = compare.do_compare_expire(expired_ips)
         with open(configs.outfile, "w") as f:
             for final_ip in final_ips:
                 f.write("%s\n" % final_ip)
     except BaseException as exp:
         logging.error(f"{exp}")
-        
+
 except BaseException as exp:
     print(exp)
     print(type(exp))
-    
+
 print("Done.")
 logging.info("=========== Finished ============")
-# if len(expired_ips) != 0 :
-#     expired_json=compare.create_expired_json(expired_ips)
-#     db.insert_expired_data(expired_json)

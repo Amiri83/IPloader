@@ -1,4 +1,4 @@
-from libs.dbconnect import DBconnct
+from libs.dbconnect import DBconnect
 import sqlite3
 import json
 import libs.readConfig
@@ -11,7 +11,7 @@ logging.basicConfig(filename=configs.log_destination,
 
 
 class DB:
-    db = DBconnct()
+    db = DBconnect()
 
     @staticmethod
     def insert_data(ips):
@@ -21,7 +21,7 @@ class DB:
             for ip in ips:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
-        logging.info("New Ips from file inserted to DB...")
+        logging.info("New IPs inserted to DB...")
 
     # db = DConnect()
 
@@ -33,7 +33,7 @@ class DB:
             for ip in ips:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
-        logging.info("New Ips from file inserted to DB...")
+        # logging.info("New Ips from file inserted to DB...")
 
     @staticmethod
     def get_ips():

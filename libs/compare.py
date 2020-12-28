@@ -1,9 +1,7 @@
 from libs.file import File
 from libs.database import DB
-from libs.dbconnect import DBconnct
 from pathlib import Path
 import datetime
-import json
 import libs.readConfig
 import logging
 
@@ -48,7 +46,7 @@ class Compare:
         return diff
     
     @staticmethod
-    def get_expried_ips():
+    def get_expired_ips():
         db = DB()
         data = db.get_data()
         today = datetime.datetime.now()
@@ -62,16 +60,3 @@ class Compare:
                 expired_ips.append(i[1])
         
         return expired_ips
-    
-    @staticmethod
-    def create_expired_json(ips):
-        ip_list = []
-        db2 = DBconnct()
-        id2 = db2.get_id2()
-        for ip in ips:
-            dt = datetime.date.today().strftime('%b %d %Y %I:%M%p')
-            ip_dict = {"id": id2, "ip": ip, "date_added": dt}
-            ip_list.append(ip_dict)
-            id2 = id2 + 1
-        
-        return json.dumps(ip_list)
