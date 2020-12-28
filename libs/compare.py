@@ -12,7 +12,8 @@ configs = libs.readConfig.Reader()
 
 class Compare:
     logging.basicConfig(filename=configs.log_destination,
-                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO)
+                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
+                        level=logging.INFO)
     
     @staticmethod
     def do_compare(file_location):

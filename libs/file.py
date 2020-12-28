@@ -12,7 +12,8 @@ class File:
     ip_list = []
     
     logging.basicConfig(filename=configs.log_destination,
-                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO)
+                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
+                        level=logging.INFO)
     
     def __init__(self, file_location):
         self.file_location = file_location
@@ -21,7 +22,7 @@ class File:
         path = Path(self.file_location)
         counter = 0
         if path.exists():
-            logging.info(f"Found new file! in {self.file_location} , reading ...")
+            logging.info(f"Found file in {self.file_location} , reading ...")
             try:
                 with open(self.file_location) as ips:
                     for ip in ips:
