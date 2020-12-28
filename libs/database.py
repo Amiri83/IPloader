@@ -1,53 +1,56 @@
-from pathlib import Path
 from libs.dbconnect import DBconnct
 import sqlite3
 import json
+import libs.readConfig
+import logging
 
+configs = libs.readConfig.Reader()
+logging.basicConfig(filename=configs.log_destination,
+                    filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S' ,level=logging.INFO)
 
-# from libs.file import File
 
 class DB:
-    db =DBconnct()
+    db = DBconnct()
+    
     @staticmethod
     def insert_data(ips):
         ips = json.loads(ips)
-        with sqlite3.connect("data.db") as conn:
+        with sqlite3.connect(configs.dbpath) as conn:
             command = "INSERT INTO ip_addresses VALUES(?,?,?) "
             for ip in ips:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
-        print("New Ips from file inserted to DB...")
+        logging.info("New Ips from file inserted to DB...")
     
-    db =DBconnct()
+    db = DBconnct()
+    
     @staticmethod
     def insert_expired_data(ips):
         ips = json.loads(ips)
-        with sqlite3.connect("data.db") as conn:
+        with sqlite3.connect(configs.dbpath) as conn:
             command = "INSERT INTO expired_addresses VALUES(?,?,?) "
             for ip in ips:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
-        print("New Ips from file inserted to DB...")
-        
-    def get_ips(self):
+        logging.info("New Ips from file inserted to DB...")
+    
+    @staticmethod
+    def get_ips():
         ip_list = []
-        with sqlite3.connect("data.db") as conn:
-            print("reading existing database info")
+        with sqlite3.connect(configs.dbpath) as conn:
+            logging.info("reading db to just get IP addreese")
             command = "SELECT * FROM ip_addresses"
             cursor = conn.execute(command)
             for row in cursor:
                 ip_list.append(row[1])
             return ip_list
-        
-    def get_data(self):
+    
+    @staticmethod
+    def get_data():
         ip_list = []
-        with sqlite3.connect("data.db") as conn:
-            print("reading existing database info")
+        with sqlite3.connect(configs.dbpath) as conn:
+            logging.info("reading existing database info to get full IP Lists using SELECT * FROM ip_addresses ")
             command = "SELECT * FROM ip_addresses"
             cursor = conn.execute(command)
             rows = cursor.fetchall()
             return rows
-        
-
-# db = DB()
-# db.read_data()

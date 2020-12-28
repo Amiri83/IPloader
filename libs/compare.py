@@ -4,9 +4,16 @@ from libs.dbconnect import DBconnct
 from pathlib import Path
 import datetime
 import json
+import libs.readConfig
+import logging
+
+configs = libs.readConfig.Reader()
 
 
 class Compare:
+    logging.basicConfig(filename=configs.log_destination,
+                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO)
+    
     @staticmethod
     def do_compare(file_location):
         try:
@@ -22,7 +29,7 @@ class Compare:
                 else:
                     return file.convert(unique_ips)
             else:
-                print("file doesnt exist")
+                logging.error(f"{configs.infile} doesn't exist")
                 return None
         except BaseException as exp:
             print(exp)
@@ -34,24 +41,25 @@ class Compare:
         db_ips = db.get_data()
         for db_ip in db_ips:
             db_ip_list.append(db_ip[1])
-         
+        
         diff = list(set(db_ip_list) - set(ips))
-
+        
         return diff
     
-    def get_expried_ips(self):
+    @staticmethod
+    def get_expried_ips():
         db = DB()
         data = db.get_data()
         today = datetime.datetime.now()
-        DD = datetime.timedelta(days=14)
-        earlier = today - DD
+        dead_line = datetime.timedelta(days=int(configs.expiration_days))
+        earlier = today - dead_line
         expired_ips = []
         for i in data:
             date_time_str = (i[2])
             date_time_obj = datetime.datetime.strptime(date_time_str, '%b %d %Y %I:%M%p')
             if earlier.date() >= date_time_obj.date():
                 expired_ips.append(i[1])
-            
+        
         return expired_ips
     
     @staticmethod

@@ -2,10 +2,17 @@ import json
 from libs.dbconnect import DBconnct
 from datetime import datetime
 from pathlib import Path
+import libs.readConfig
+import logging
+
+configs = libs.readConfig.Reader()
 
 
-class File():
+class File:
     ip_list = []
+    
+    logging.basicConfig(filename=configs.log_destination,
+                        filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO)
     
     def __init__(self, file_location):
         self.file_location = file_location
@@ -13,21 +20,21 @@ class File():
     def read_data(self):
         path = Path(self.file_location)
         counter = 0
-        if (path.exists()):
-            print(f"Found new file! in {self.file_location} , reading ...")
+        if path.exists():
+            logging.info(f"Found new file! in {self.file_location} , reading ...")
             try:
                 with open(self.file_location) as ips:
                     for ip in ips:
                         self.ip_list.append(ip.strip())
                         counter = counter + 1
             except BaseException as exp:
-                print(exp)
-                print(type(exp))
+                logging.error(f"{exp}")
+                logging.error(f"{type(exp)}")
             
-            print(f"Found  {counter} ips")
+            logging.info(f"Found  {counter} ips")
             return self.ip_list
         else:
-            print(f"file {self.file_location} does not exist .")
+            logging.error(f"file {self.file_location} does not exist .")
             return None
     
     @staticmethod
@@ -42,7 +49,7 @@ class File():
                 ip_dict = {"id": id, "ip": ip, "date_added": dt}
                 ip_list.append(ip_dict)
         except BaseException as exp:
-            print(exp)
-            print(type(exp))
+            logging.error(f"{exp}")
+            logging.error(f"{type(exp)}")
         
         return json.dumps(ip_list)
