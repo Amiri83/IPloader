@@ -5,11 +5,12 @@ import logging
 
 try:
     configs = libs.readConfig.Reader()
-    
+    print("starting ...")
     logging.basicConfig(filename=configs.log_destination,
                         filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',level=logging.INFO)
     compare = Compare()
     db = DB()
+    logging.info("========== Started ==============")
     result = compare.do_compare(configs.infile)
     if result is not None:
         logging.info("new ips will be insert to DB")
@@ -29,7 +30,8 @@ except BaseException as exp:
     print(exp)
     print(type(exp))
     
-    
+print("Done.")
+logging.info("=========== Finished ============")
 # if len(expired_ips) != 0 :
 #     expried_json=compare.create_expired_json(expired_ips)
 #     db.insert_expired_data(expried_json)

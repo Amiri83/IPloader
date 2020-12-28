@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eb80cd4a-356b-4b4c-bb16-54083a5c6c37" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config.ini" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/libs/readConfig.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/IPloader.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IPloader.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/compare.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/compare.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libs/dbconnect.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/dbconnect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/file.py" beforeDir="false" afterPath="$PROJECT_DIR$/libs/file.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -159,6 +157,8 @@
       <workItem from="1609096102091" duration="447000" />
       <workItem from="1609096563999" duration="8310000" />
       <workItem from="1609105813094" duration="5350000" />
+      <workItem from="1609180813318" duration="600000" />
+      <workItem from="1609181441735" duration="2050000" />
     </task>
     <task id="LOCAL-00001" summary="init commit">
       <created>1609070824277</created>
@@ -204,5 +204,8 @@
     <MESSAGE value="read File added" />
     <MESSAGE value="adding some info" />
     <option name="LAST_COMMIT_MESSAGE" value="adding some info" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/IPloader$run.coverage" NAME="run Coverage Results" MODIFIED="1609182497054" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
