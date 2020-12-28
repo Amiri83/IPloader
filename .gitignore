@@ -1,3 +1,4 @@
 #idea folder
 .idea
+#virtual env
 venv
