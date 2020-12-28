@@ -6,10 +6,14 @@ class DBconnct:
         
         try:
             with sqlite3.connect("data.db") as conn:
-                command = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
+                command1 = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
                           'ip STRING NOT NULL,' \
                           'date_added STRING NOT NULL)'
-                conn.execute(command)
+                command2 = 'create table if not exists expired_addresses ( id INTEGER PRIMARY KEY , ' \
+                           'ip STRING NOT NULL,' \
+                           'date_added STRING NOT NULL)'
+                conn.execute(command1)
+                conn.execute(command2)
         except BaseException as exp:
             print(exp)
             print(type(exp))
@@ -32,3 +36,19 @@ class DBconnct:
             print(type(exp))
 
 
+    def get_id2(self):
+        try:
+            with sqlite3.connect("data.db") as conn:
+                command = "SELECT id from expired_addresses ORDER by id DESC"
+                cursor = conn.execute(command)
+                rows = cursor.fetchone()
+                if rows == None:
+                    print("Got row numbers from DB = 0 rows")
+                    return 0
+                else:
+                    index = list(rows).pop()
+                    print(f"Got row numbers from DB = {index} rows")
+                    return index
+        except BaseException as exp:
+            print(exp)
+            print(type(exp))
