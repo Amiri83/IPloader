@@ -1,8 +1,11 @@
 from libs.dbconnect import DBconnect
 from datetime import datetime
 from pathlib import Path
+import json
+from libs.database import DB
 import libs.readConfig
 import logging
+from libs.AbuseCheck import Abuse
 
 configs = libs.readConfig.Reader()
 
@@ -18,6 +21,9 @@ class File:
         self.file_location = file_location
 
     def read_data(self):
+        abuse = Abuse()
+        abuse_list = []
+        db = DB()
         path = Path(self.file_location)
         counter = 0
         if path.exists():
@@ -25,8 +31,15 @@ class File:
             try:
                 with open(self.file_location) as ips:
                     for ip in ips:
-                        self.ip_list.append(ip.strip())
-                        counter = counter + 1
+                        abuse_result = abuse.send_req(ip)
+                        if abuse_result is not None:
+                         logging.info(f"{ip.strip()} -> Keep")
+                         self.ip_list.append(ip.strip())
+                         counter = counter + 1
+                         abuse_list.append(abuse_result)
+                        else:
+                         logging.info(f"{ip.strip()} -> Remove")
+                    db.insert_abused(json.dumps(abuse_list))
             except BaseException as exp:
                 logging.error(f"{exp}")
                 logging.error(f"{type(exp)}")

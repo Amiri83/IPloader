@@ -4,6 +4,7 @@ from pathlib import Path
 import datetime
 import libs.readConfig
 import logging
+from libs.AbuseCheck import Abuse
 
 configs = libs.readConfig.Reader()
 
@@ -58,11 +59,4 @@ class Compare:
             date_time_obj = datetime.datetime.strptime(date_time_str, '%b %d %Y %I:%M%p')
             if earlier.date() >= date_time_obj.date():
                 expired_ips.append(i[1])
-
         return expired_ips
-
-    @staticmethod
-    def get_abused(ips):
-        abused = []
-        for ip in ips:
-              print(ip)
