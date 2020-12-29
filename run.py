@@ -2,7 +2,6 @@ from libs.compare import Compare
 from libs.database import DB
 import libs.readConfig
 import logging
-import json
 
 try:
     configs = libs.readConfig.Reader()
@@ -16,7 +15,7 @@ try:
     result = compare.do_compare(configs.infile)
     abuse_list = []
     if result is not None:
-        db.insert_data(json.dumps(result))
+        db.insert_data(result)
     else:
         logging.info("No new IP found")
     try:

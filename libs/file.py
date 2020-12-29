@@ -64,4 +64,4 @@ class File:
         except BaseException as exp:
             logging.error(f"{exp}")
             logging.error(f"{type(exp)}")
-        return ip_list
+        return json.dumps(ip_list)
