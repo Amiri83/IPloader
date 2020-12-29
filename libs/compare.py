@@ -12,7 +12,7 @@ class Compare:
     logging.basicConfig(filename=configs.log_destination,
                         filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
                         level=logging.INFO)
-    
+
     @staticmethod
     def do_compare(file_location):
         try:
@@ -32,7 +32,7 @@ class Compare:
                 return None
         except BaseException as exp:
             print(exp)
-    
+
     @staticmethod
     def do_compare_expire(ips):
         db = DB()
@@ -40,11 +40,11 @@ class Compare:
         db_ips = db.get_data()
         for db_ip in db_ips:
             db_ip_list.append(db_ip[1])
-        
+
         diff = list(set(db_ip_list) - set(ips))
-        
+
         return diff
-    
+
     @staticmethod
     def get_expired_ips():
         db = DB()
@@ -58,5 +58,11 @@ class Compare:
             date_time_obj = datetime.datetime.strptime(date_time_str, '%b %d %Y %I:%M%p')
             if earlier.date() >= date_time_obj.date():
                 expired_ips.append(i[1])
-        
+
         return expired_ips
+
+    @staticmethod
+    def get_abused(ips):
+        abused = []
+        for ip in ips:
+              print(ip)

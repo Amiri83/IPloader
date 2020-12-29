@@ -1,4 +1,3 @@
-import json
 from libs.dbconnect import DBconnect
 from datetime import datetime
 from pathlib import Path
@@ -10,14 +9,14 @@ configs = libs.readConfig.Reader()
 
 class File:
     ip_list = []
-    
+
     logging.basicConfig(filename=configs.log_destination,
                         filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
                         level=logging.INFO)
-    
+
     def __init__(self, file_location):
         self.file_location = file_location
-    
+
     def read_data(self):
         path = Path(self.file_location)
         counter = 0
@@ -31,13 +30,13 @@ class File:
             except BaseException as exp:
                 logging.error(f"{exp}")
                 logging.error(f"{type(exp)}")
-            
+
             logging.info(f"Found  {counter} ips")
             return self.ip_list
         else:
             logging.error(f"file {self.file_location} does not exist .")
             return None
-    
+
     @staticmethod
     def convert(ips):
         db = DBconnect()
@@ -52,5 +51,4 @@ class File:
         except BaseException as exp:
             logging.error(f"{exp}")
             logging.error(f"{type(exp)}")
-        
-        return json.dumps(ip_list)
+        return ip_list

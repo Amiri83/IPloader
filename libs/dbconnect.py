@@ -9,7 +9,7 @@ logging.basicConfig(filename=configs.log_destination,
                     level=logging.INFO)
 
 
-class DBconnect:
+class DBconnect():
     def __init__(self):
 
         try:
@@ -17,13 +17,22 @@ class DBconnect:
                 command = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
                            'ip STRING NOT NULL,' \
                            'date_added STRING NOT NULL)'
+                command2 = 'create table if not exists abused_address (  ' \
+                          'ip STRING NOT NULL,' \
+                          'countryCode STRING NOT NULL,' \
+                          'isp STRING NOT NULL,' \
+                          'domain STRING NOT NULL,' \
+                          'totalReports STRING NOT NULL,' \
+                          'lastReportedAt STRING NOT NULL)'
+
                 conn.execute(command)
+                conn.execute(command2)
         except BaseException as exp:
             logging.error(f"{exp}")
             logging.error(f"{type(exp)}")
 
     @staticmethod
-    def get_id():
+    def get_id() -> int:
         try:
             with sqlite3.connect(configs.dbpath) as conn:
                 command = "SELECT id from ip_addresses ORDER by id DESC"
