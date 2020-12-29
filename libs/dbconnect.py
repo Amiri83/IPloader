@@ -19,11 +19,11 @@ class DBconnect():
                            'date_added STRING NOT NULL)'
                 command2 = 'create table if not exists abused_address (  ' \
                           'ip STRING NOT NULL,' \
-                          'countryCode STRING NOT NULL,' \
-                          'isp STRING NOT NULL,' \
-                          'domain STRING NOT NULL,' \
-                          'totalReports STRING NOT NULL,' \
-                          'lastReportedAt STRING NOT NULL)'
+                          'countryCode STRING ,' \
+                          'isp STRING ,' \
+                          'domain STRING ,' \
+                          'totalReports STRING ,' \
+                          'lastReportedAt STRING )'
 
                 conn.execute(command)
                 conn.execute(command2)
