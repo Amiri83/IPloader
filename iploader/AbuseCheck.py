@@ -6,12 +6,13 @@ import iploader.readConfig
 configs = iploader.readConfig.Reader()
 KEY = configs.token
 
-#KEY = "d1132f7e27c7b451f68e772029364b6b35268c1dcc7d1680f029603bd0febeccc26c4d86934fcdcb"
+
 
 class Abuse:
 
     @staticmethod
     def send_req(ip):
+        print(f"Checking {ip} against Abuse DB")
         url = 'https://api.abuseipdb.com/api/v2/check'
         querystring = {
             'ipAddress': ip
@@ -34,14 +35,16 @@ class Abuse:
                 and response['data']['abuseConfidenceScore'] == 100 \
                 and response['data']['totalReports'] > 0:
 
-               result= dict({"ip": ip, "countryCode": response['data']['countryCode'], "isp": response['data']['isp'],
+               result = dict({"ip": ip, "countryCode": response['data']['countryCode'], "isp": response['data']['isp'],
                       "domain": response['data']['domain'],
                       "totalReports": str(response['data']['totalReports']),
                       "lastReportedAt": response['data']['lastReportedAt']})
+               print(f"{ip} -> Abused")
                return result
 
         else:
+            print(f"{ip} -> OK")
             return None
 
-#abuse = Abuse()
-#print (abuse.send_req("1.1.1.1"))
+# abuse = Abuse()
+# print (abuse.send_req("1.1.1.1"))
