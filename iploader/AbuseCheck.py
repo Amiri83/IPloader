@@ -12,7 +12,7 @@ class Abuse:
 
     @staticmethod
     def send_req(ip):
-        print(f"Checking {ip} against Abuse DB")
+        print(f"Checking {ip.strip()} against Abuse DB")
         url = 'https://api.abuseipdb.com/api/v2/check'
         querystring = {
             'ipAddress': ip
@@ -39,11 +39,11 @@ class Abuse:
                       "domain": response['data']['domain'],
                       "totalReports": str(response['data']['totalReports']),
                       "lastReportedAt": response['data']['lastReportedAt']})
-               print(f"{ip} -> Abused")
+               print(f"{ip.strip()} -> Abused")
                return result
 
         else:
-            print(f"{ip} -> OK")
+            print(f"{ip.strip()} -> OK")
             return None
 
 # abuse = Abuse()

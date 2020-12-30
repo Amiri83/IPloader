@@ -70,6 +70,7 @@ class DB:
             cursor = conn.execute(command)
             for row in cursor:
                 ip_list.append(row[1])
+
             return ip_list
     
     @staticmethod
