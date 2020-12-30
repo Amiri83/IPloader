@@ -1,13 +1,13 @@
-from libs.dbconnect import DBconnect
+
 from datetime import datetime
 from pathlib import Path
 import json
-from libs.database import DB
-import libs.readConfig
+from iploader.database import DB
+import iploader.readConfig
 import logging
-from libs.AbuseCheck import Abuse
+from iploader.AbuseCheck import Abuse
 
-configs = libs.readConfig.Reader()
+configs = iploader.readConfig.Reader()
 
 
 class File:
@@ -52,7 +52,7 @@ class File:
 
     @staticmethod
     def convert(ips):
-        db = DBconnect()
+        db = DB()
         ip_list = []
         id_db = db.get_id()
         dt = datetime.today().strftime('%b %d %Y %I:%M%p')

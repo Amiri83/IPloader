@@ -1,12 +1,12 @@
-from libs.file import File
-from libs.database import DB
+from iploader.file import File
+from iploader.database import DB
 from pathlib import Path
 import datetime
-import libs.readConfig
+import iploader.readConfig
 import logging
-from libs.AbuseCheck import Abuse
 
-configs = libs.readConfig.Reader()
+
+configs = iploader.readConfig.Reader()
 
 
 class Compare:

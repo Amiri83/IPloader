@@ -3,3 +3,7 @@
 #virtual env
 venv
 libs/__pycache__/
+__pycache__
+dist
+build
+iploader.py

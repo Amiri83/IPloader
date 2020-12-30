@@ -1,10 +1,11 @@
-from libs.compare import Compare
-from libs.database import DB
-import libs.readConfig
+#! /usr/bin/env python
+from iploader.compare import Compare
+from iploader.database import DB
+import iploader.readConfig
 import logging
 
 try:
-    configs = libs.readConfig.Reader()
+    configs = iploader.readConfig.Reader()
     print("starting ...")
     logging.basicConfig(filename=configs.log_destination,
                         filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',

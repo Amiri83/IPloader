@@ -1,18 +1,37 @@
-from libs.dbconnect import DBconnect
 import sqlite3
 import json
-import libs.readConfig
+import iploader.readConfig
 import logging
 
-configs = libs.readConfig.Reader()
+configs = iploader.readConfig.Reader()
 logging.basicConfig(filename=configs.log_destination,
                     filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
                     level=logging.INFO)
 
 
 class DB:
-    db = DBconnect()
-
+    
+    def __init__(self):
+        
+        try:
+            with sqlite3.connect(configs.dbpath) as conn:
+                command = 'create table if not exists ip_addresses ( id INTEGER PRIMARY KEY , ' \
+                          'ip STRING NOT NULL,' \
+                          'date_added STRING NOT NULL)'
+                command2 = 'create table if not exists abused_address (  ' \
+                           'ip STRING NOT NULL,' \
+                           'countryCode STRING ,' \
+                           'isp STRING ,' \
+                           'domain STRING ,' \
+                           'totalReports STRING ,' \
+                           'lastReportedAt STRING )'
+                
+                conn.execute(command)
+                conn.execute(command2)
+        except BaseException as exp:
+            logging.error(f"{exp}")
+            logging.error(f"{type(exp)}")
+    
     @staticmethod
     def insert_data(ips):
         ips = json.loads(ips)
@@ -22,7 +41,7 @@ class DB:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
         logging.info("New IPs inserted to DB...")
-
+    
     @staticmethod
     def insert_abused(ips):
         ips = json.loads(ips)
@@ -32,8 +51,7 @@ class DB:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
         logging.info("New IPs inserted to Abused Table...")
-
-
+    
     @staticmethod
     def insert_expired_data(ips):
         ips = json.loads(ips)
@@ -42,9 +60,9 @@ class DB:
             for ip in ips:
                 conn.execute(command, tuple(ip.values()))
             conn.commit()
-
+    
     @staticmethod
-    def get_ips() :
+    def get_ips():
         ip_list = []
         with sqlite3.connect(configs.dbpath) as conn:
             logging.info("Reading db to get existing ips")
@@ -53,9 +71,9 @@ class DB:
             for row in cursor:
                 ip_list.append(row[1])
             return ip_list
-
+    
     @staticmethod
-    def get_data() :
+    def get_data():
         # ip_list = []
         with sqlite3.connect(configs.dbpath) as conn:
             # logging.info("reading existing database info to get full IP Lists using SELECT * FROM ip_addresses ")
@@ -63,3 +81,21 @@ class DB:
             cursor = conn.execute(command)
             rows = cursor.fetchall()
             return rows
+    
+    @staticmethod
+    def get_id() -> int:
+        try:
+            with sqlite3.connect(configs.dbpath) as conn:
+                command = "SELECT id from ip_addresses ORDER by id DESC"
+                cursor = conn.execute(command)
+                rows = cursor.fetchone()
+                if rows is None:
+                    logging.info("Got row numbers from DB = 0 rows")
+                    return 0
+                else:
+                    index = list(rows).pop()
+                    logging.info(f"Got row numbers from DB = {index} rows")
+                    return index
+        except BaseException as exp:
+            logging.error(f"{exp}")
+            logging.error(f"{type(exp)}")
