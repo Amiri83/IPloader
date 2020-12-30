@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! /usr/bin/env python3
 from iploader.compare import Compare
 from iploader.database import DB
 import iploader.readConfig
