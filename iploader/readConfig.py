@@ -1,8 +1,13 @@
 import configparser
+from pathlib import Path
+
+path = Path('/opt/config.ini')
+if path.exists() == False:
+    print("Config File \"/opt/config.ini\" does not exist.\nAborting program ...")
+    exit(1)
 
 config = configparser.ConfigParser()
-config.read('config.ini')
-
+config.read('/opt/config.ini')
 
 class Reader:
 
@@ -25,3 +30,8 @@ class Reader:
     @property
     def log_destination(self):
         return config['conf']['LogDest']
+
+    @property
+    def token(self):
+        return config['conf']['Token']
+

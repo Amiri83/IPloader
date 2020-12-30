@@ -2,8 +2,11 @@
 
 import requests
 import json
+import iploader.readConfig
+configs = iploader.readConfig.Reader()
+KEY = configs.token
 
-KEY = "d1132f7e27c7b451f68e772029364b6b35268c1dcc7d1680f029603bd0febeccc26c4d86934fcdcb"
+#KEY = "d1132f7e27c7b451f68e772029364b6b35268c1dcc7d1680f029603bd0febeccc26c4d86934fcdcb"
 
 class Abuse:
 
