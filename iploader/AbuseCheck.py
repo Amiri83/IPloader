@@ -1,15 +1,13 @@
-
-
 import requests
 import json
-import iploader.readConfig
-configs = iploader.readConfig.Reader()
-KEY = configs.token
+from iploader.readConfig import Reader
 
+reader = Reader()
+KEY = reader.token
 
 
 class Abuse:
-
+    
     @staticmethod
     def send_req(ip):
         print(f"Checking {ip.strip()} against Abuse DB")
@@ -34,14 +32,15 @@ class Abuse:
         if response['data']['isWhitelisted'] is False \
                 and response['data']['abuseConfidenceScore'] == 100 \
                 and response['data']['totalReports'] > 0:
-
-               result = dict({"ip": ip, "countryCode": response['data']['countryCode'], "isp": response['data']['isp'],
-                      "domain": response['data']['domain'],
-                      "totalReports": str(response['data']['totalReports']),
-                      "lastReportedAt": response['data']['lastReportedAt']})
-               print(f"{ip.strip()} -> Abused")
-               return result
-
+            
+            result = dict({"ip": ip, "countryCode": response['data']['countryCode'], "isp": response['data']['isp'],
+                           "domain": response['data']['domain'],
+                           "totalReports": str(response['data']['totalReports']),
+                           "lastReportedAt": response['data']['lastReportedAt']})
+            print(f"{ip.strip()} -> Abused")
+            
+            return result
+        
         else:
             print(f"{ip.strip()} -> OK")
             return None

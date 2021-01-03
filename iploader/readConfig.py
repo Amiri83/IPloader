@@ -19,6 +19,7 @@ class Reader:
         self.__dbpath = config['conf']['DBPath']
         self.__expiration_days = config['conf']['ExpirationDays']
         self.__log_destination = config['conf']['LogDest']
+        
 
     @property
     def infile(self):
@@ -27,7 +28,7 @@ class Reader:
     @property
     def outfile(self):
         return self.__outfile
-
+    
     @property
     def dbpath(self):
         return self.__dbpath

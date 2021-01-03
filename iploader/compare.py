@@ -2,18 +2,17 @@ from iploader.file import File
 from iploader.database import DB
 from pathlib import Path
 import datetime
-import iploader.readConfig
 import logging
+from iploader.readConfig import Reader
 
-
-configs = iploader.readConfig.Reader()
+reader = Reader()
 
 
 class Compare:
-    logging.basicConfig(filename=configs.log_destination,
+    logging.basicConfig(filename=reader.log_destination,
                         filemode='a', format='%(asctime)s- %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S',
                         level=logging.INFO)
-
+    
     @staticmethod
     def do_compare(file_location):
         try:
@@ -29,11 +28,11 @@ class Compare:
                 else:
                     return file.convert(unique_ips)
             else:
-                logging.error(f"{configs.infile} doesn't exist")
+                logging.error(f"{reader.infile} doesn't exist")
                 return None
         except BaseException as exp:
             print(exp)
-
+    
     @staticmethod
     def do_compare_expire(ips):
         db = DB()
@@ -41,17 +40,17 @@ class Compare:
         db_ips = db.get_data()
         for db_ip in db_ips:
             db_ip_list.append(db_ip[1])
-
+        
         diff = list(set(db_ip_list) - set(ips))
-
+        
         return diff
-
+    
     @staticmethod
     def get_expired_ips():
         db = DB()
         data = db.get_data()
         today = datetime.datetime.now()
-        dead_line = datetime.timedelta(days=int(configs.expiration_days))
+        dead_line = datetime.timedelta(days=int(reader.expiration_days))
         earlier = today - dead_line
         expired_ips = []
         for i in data:
