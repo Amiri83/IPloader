@@ -10,3 +10,4 @@ iploader.py
 Pipfile
 Pipfile.lock
 *.egg-info
+setup.py
