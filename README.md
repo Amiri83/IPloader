@@ -29,11 +29,12 @@ Token = <YOUR ABUSEDB TOKEN>
 Inflie:
 csv list of IPS that you want to check against abuseipDB , should look like this :
 
+```bash
 1.1.1.1
 2.2.2.2
 3.4.5.2
 ....
-
+```
 outfile:
 where to put the file 
 
