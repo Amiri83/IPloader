@@ -24,7 +24,6 @@ Outfile = /var/www/html/ip.txt
 ExpirationDays = 60
 LogDest = /var/log/ip_loader.log
 Token = <YOUR ABUSEDB TOKEN>
-
 ```
 Inflie:
 csv list of IPS that you want to check against abuseipDB , should look like this :
@@ -61,4 +60,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## License
-[GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
+[MIT](https://choosealicense.com/licenses/MIT/)
