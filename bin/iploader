@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 import os
+import datetime
 from os import path
 from iploader.compare import Compare
 from iploader.database import DB
@@ -8,8 +9,9 @@ import logging
 
 
 def main():
-    
+    abuse_list = []
     read = Reader()
+    current_date = datetime.datetime.today().strftime('%d-%b-%Y-%H-%M-%S')
     try:
         logging.basicConfig(filename=read.log_destination,
                             filemode='a', format='%(asctime)s- %(levelname)s - %(message)s',
@@ -19,9 +21,14 @@ def main():
         db = DB()
         logging.info("========== Started ==============")
         print("========== Started ==============")
-
         result = compare.do_compare(read.infile)
-        abuse_list = []
+
+        if path.exists(read.infile):
+            in_current_date_str= str(current_date)
+            os.rename(rf'{read.infile}', rf'{read.infile}' + '-' + in_current_date_str + '.txt')
+            print(f"file{read.infile} renamed to {read.infile}-{in_current_date_str}.txt ")
+            logging.info(f"file{read.infile} renamed to {read.infile}-{in_current_date_str}.txt ")
+
         if result is not None:
             db.insert_data(result)
         else:
@@ -29,12 +36,22 @@ def main():
             print("No new IP found")
         try:
             if int(read.expiration_days) != 0:
-                if path.exists(read.infile):
-                    expired_ips = (compare.get_expired_ips())
-                    final_ips = compare.do_compare_expire(expired_ips)
-                    with open(read.outfile, "w") as f:
-                        for final_ip in final_ips:
-                            f.write("%s\n" % final_ip)
+                result = compare.do_compare(read.infile)
+                expired_ips = (compare.get_expired_ips())
+                final_ips = compare.do_compare_expire(expired_ips)
+                if path.exists(read.outfile):
+                    current_date_str = str(current_date)
+                    os.rename(rf'{read.outfile}', rf'{read.outfile}' + '-' + current_date_str + '.txt')
+
+                with open(read.outfile, "w") as f:
+                    for final_ip in final_ips:
+                        f.write("%s\n" % final_ip)
+
+                print(
+                    f"Generating IP list Based on DB data to: {read.outfile}\nOld file labeled as {read.outfile}-{current_date_str}.txt")
+                logging.info(
+                    f"Generating IP list Based on DB data to: {read.outfile}\nOld file labeled as {read.outfile}-{current_date_str}.txt")
+
             else:
                 print("IP expiration date set to NeverExpire")
                 logging.info("IP expiration date set to NeverExpire")
