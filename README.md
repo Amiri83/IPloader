@@ -87,9 +87,9 @@ Persistent=true
 WantedBy=timers.target
 ```
 reload the daemon 
-
-systemctl reload-daemon
-
+```sh
+systemctl daemon-reload
+```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
