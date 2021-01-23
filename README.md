@@ -54,6 +54,42 @@ second function is use if you want blacklist Abused ip for specific days not alw
 each time you run program it checks expiration in config.ini date with insertion date in DB if date is passed will remove IP form outfile 
 if you want to use expriation date you need to put program in crontab to run at-least once a day
 
+## Adding as a system service 
+firts set service 
+```sh
+root@MON-IPREP:/lib/systemd/system# vim iploader.service 
+[Unit]
+Description=iploader
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/iploader
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+then set timer
+root@MON-IPREP:/lib/systemd/system# vim iploader.timer   
+```sh
+[Unit]
+Description=daily run for iploader
+
+[Timer]
+OnCalendar=daily
+RandomizedDelaySec=12h
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+reload the daemon 
+
+systemctl reload-daemon
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
