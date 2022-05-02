@@ -4,7 +4,7 @@ Abuse DB IP loader is a tool to check a list of given IP aginest abuseipDB (http
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install iploader.
 
 ```bash
 pip3 install iploader
