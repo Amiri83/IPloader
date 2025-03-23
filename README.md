@@ -7,7 +7,7 @@
 
 ## 🛡️ Problem Overview
 
-At our network edge, we used a **Fortigate firewall** to block malicious IPs reported daily—often 60–70 addresses, suspected of hacking attempts. We faced several challenges:
+At our network edge, we used a **Fortigate firewall** to block malicious IPs reported daily—often hundreds addresses, suspected of hacking attempts. We faced several challenges:
 
 1. **Hosting the Blocklist**  
 Fortigate required the Bad-IP list to be hosted on a web server (e.g., Nginx) to import and apply it.
