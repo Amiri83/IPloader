@@ -1,3 +1,27 @@
+## 🛡️ Problem Overview
+
+At our network edge, we used a **Fortigate firewall** to block malicious IPs reported daily—often 60–70 addresses, suspected of hacking attempts. We faced several challenges:
+
+1. **Hosting the Blocklist**  
+Fortigate required the Bad-IP list to be hosted on a web server (e.g., Nginx) to import and apply it.
+
+2. **IP Reputation Uncertainty**  
+Not all IPs were confirmed threats. We needed to **verify them against AbuseIPDB** before blacklisting.
+
+3. **No Auto-Expiration**  
+Fortigate lacked **time-based blocking**—once blocked, IPs remained indefinitely unless manually removed.
+
+## 🧩 Solution: IPloader
+
+**IPloader** automates the process of validating, managing, and serving threat IP lists for Fortigate firewalls. It solves the challenges by:
+
+- Validating IPs against **AbuseIPDB** to confirm threat reputation.
+- Storing IPs in a **SQLite database** to prevent duplicates and manage expiration.
+- Automatically **removing expired IPs** after a defined time.
+- Serving the verified IP list via **Nginx** for Fortigate to import and block.
+- Running as a **systemd timer** to update the list daily, with no manual effort.
+
+
 # AbuseIPDB IPLoader
 
 Abuse DB IP loader is a tool to check a list of given IP aginest abuseipDB (https://www.abuseipdb.com/) to determine which one is 100% attacker ips 
