@@ -1,6 +1,9 @@
 # IPloader
 
 [![PyPI version](https://badge.fury.io/py/iploader.svg)](https://pypi.org/project/iploader/)
+![Python](https://img.shields.io/badge/python-3.6%2B-blue)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Downloads](https://pepy.tech/badge/iploader)](https://pepy.tech/project/iploader)
 
 ## 🛡️ Problem Overview
 
