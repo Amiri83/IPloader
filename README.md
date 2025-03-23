@@ -21,6 +21,7 @@ Fortigate lacked **time-based blocking**—once blocked, IPs remained indefinite
 - Serving the verified IP list via **Nginx** for Fortigate to import and block.
 - Running as a **systemd timer** to update the list daily, with no manual effort.
 
+![IPloader Workflow](docs/iploader_shadow.png)
 
 # AbuseIPDB IPLoader
 
