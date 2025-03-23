@@ -41,7 +41,7 @@ Use `pip` to install IPloader:
 ```bash
 pip3 install iploader
 ```
-####⚙️ Configuration
+#### ⚙️ Configuration
 
 Create a config.ini file in /opt/ with the following content:
 
@@ -85,7 +85,7 @@ CSV list of IPs to check against AbuseIPDB:
  - **Token**
    Your ABUSEIPDB‌ API Token
 
-  ### ⚙️How It Works
+  ### ⚙️ How It Works
   
   IPloader reads IPs from the input file and checks each against AbuseIPDB.
 
