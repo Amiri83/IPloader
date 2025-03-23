@@ -1,3 +1,7 @@
+# IPloader
+
+[![PyPI version](https://badge.fury.io/py/iploader.svg)](https://pypi.org/project/iploader/)
+
 ## 🛡️ Problem Overview
 
 At our network edge, we used a **Fortigate firewall** to block malicious IPs reported daily—often 60–70 addresses, suspected of hacking attempts. We faced several challenges:
@@ -23,24 +27,25 @@ Fortigate lacked **time-based blocking**—once blocked, IPs remained indefinite
 
 ![IPloader Workflow](docs/iploader_shadow.png)
 
-# AbuseIPDB IPLoader
+## 📦 About IPloader
 
-Abuse DB IP loader is a tool to check a list of given IP aginest abuseipDB (https://www.abuseipdb.com/) to determine which one is 100% attacker ips 
+IPloader is a tool that checks a list of IPs against [AbuseIPDB](https://www.abuseipdb.com/) to determine which IPs are confirmed threats. It then prepares the list for use with Fortigate firewalls and handles IP expiration automatically.
 
-## Installation
+## 🚀 Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install iploader.
+Use `pip` to install IPloader:
 
 ```bash
 pip3 install iploader
 ```
+####⚙️ Configuration
 
-## Usage
-after installation create a config.ini file in /opt/ like follow:
-```bash
+Create a config.ini file in /opt/ with the following content:
+
+```ini
 [DEFAULT]
-Description = IPFloader
-Version =1.0
+Description = IPloader
+Version = 1.0
 
 [conf]
 Infile = /tmp/ip_list.txt
@@ -48,60 +53,67 @@ DBPath = /opt/data.db
 Outfile = /var/www/html/ip.txt
 ExpirationDays = 60
 LogDest = /var/log/ip_loader.log
-Token = <YOUR ABUSEDB TOKEN>
+Token = <YOUR_ABUSEIPDB_TOKEN>
 ```
-Inflie:
-csv list of IPS that you want to check against abuseipDB , should look like this :
+### Confing  Descriptions:
+
+- **Infile**
+  
+CSV list of IPs to check against AbuseIPDB:
 
 ```bash
 1.1.1.1
 2.2.2.2
 3.4.5.2
-....
+...
 ```
-outfile:
-where to put the file 
+- **Outfile**
+ File path where the validated IP list will be saved. This is server by webserve 
 
-LogDest:
-All events will be dispplayed on console and logged into this log file for future refrence 
+- **LogDest**
+ File path for logging. All events are also displayed in the console.
 
-ExpirationDays:
-put it 0 if you dont need ips to be expired and be remoevd form exported file:
+- **ExpirationDays**
+  Set to 0 to disable expiration. IPs will remain until manually removed.
+  
+- **DBPath**
+  Location for the SQLite database.
+  
+ - **Token**
+   Your ABUSEIPDB‌ API Token
 
-DBpath: 
-a location for sqllite3 DB
+  ### ⚙️How It Works
+  
+  IPloader reads IPs from the input file and checks each against AbuseIPDB.
 
-## How does it works ?
-it uses a sqllite db to store ips which is read from file , DB is used for 2 reason 
-1- Prevent from importing dupicate IPS from file 
-2- Expire IPS after spsfice days .
-second function is use if you want blacklist Abused ip for specific days not always , when IP is read from file it will insert into db with date and time 
-each time you run program it checks expiration in config.ini date with insertion date in DB if date is passed will remove IP form outfile 
-if you want to use expriation date you need to put program in crontab to run at-least once a day
+  Valid IPs are stored in a SQLite database with a timestamp.
 
-## Adding as a system service 
-firts set service 
-```sh
-root@MON-IPREP:/lib/systemd/system# vim iploader.service 
+  On each run, it checks for expired IPs and removes them from the output list.
+
+  To use expiration, schedule the script via cron or systemd to run daily.
+
+  ### 🔧 Run as a Systemd Service
+
+  **1.Create the service file:**
+  ```bash
+  sudo vim /lib/systemd/system/iploader.service
+  ```
+  ```ini
 [Unit]
-Description=iploader
+Description=IPloader Service
 
 [Service]
 Type=simple
 ExecStart=/usr/local/bin/iploader
-
-[Timer]
-OnCalendar=daily
-Persistent=true
-
-[Install]
-WantedBy=timers.target
 ```
-then set timer
-root@MON-IPREP:/lib/systemd/system# vim iploader.timer   
-```sh
+
+**2.Create the timer file:**
+```bash
+sudo vim /lib/systemd/system/iploader.timer
+```
+```ini
 [Unit]
-Description=daily run for iploader
+Description=Daily run for IPloader
 
 [Timer]
 OnCalendar=daily
@@ -111,14 +123,12 @@ Persistent=true
 [Install]
 WantedBy=timers.target
 ```
-reload the daemon 
-```sh
-systemctl daemon-reload
+**3.Reload systemd and enable the timer:**
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now iploader.timer
 ```
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+## 🤝 Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
 
-Please make sure to update tests as appropriate.
 
-## License
-[MIT](https://choosealicense.com/licenses/MIT/)
